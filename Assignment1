@@ -1,1 +1,62 @@
 
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+w = 3
+b = 6
+w1, b1 = 1, 2
+w2, b2 = -8, -6
+w3, w4 = 5,3
+
+# Function definitions
+def linear_function(x):
+    return w * x + b
+
+def quadratic_function(x):
+    return x**2
+
+def sigmoid_function(x):
+    return 1 / (1 + np.exp(-x))
+
+def hyperbolic_tangent_function(x):
+    return (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
+
+def composed_function(x):
+    u = w * x + b
+    return sigmoid_function(u)
+
+def composed_function_2(x):
+    f1 = w1 * x + b1
+    f2 = w2 * x + b2
+    u1 = sigmoid_function(f1)
+    u2 = sigmoid_function(f2)
+    return hyperbolic_tangent_function(w3 * u1 + w4 * u2 + b)
+
+# Generate x values
+x_values = np.arange(-10, 10.1, 0.1)
+
+# Calculate y values for each function
+y_linear = linear_function(x_values)
+y_quadratic = quadratic_function(x_values)
+y_sigmoid = sigmoid_function(x_values)
+y_tanh = hyperbolic_tangent_function(x_values)
+y_composed = composed_function(x_values)
+y_composed_2 = composed_function_2(x_values)
+
+# Plotting
+plt.figure(figsize=(10, 8))
+
+plt.plot(x_values, y_linear, label='y = wx + b')
+plt.plot(x_values, y_quadratic, label='y = x^2')
+plt.plot(x_values, y_sigmoid, label='y = 1 / (1 + e^(-x))')
+plt.plot(x_values, y_tanh, label='y = (e^x - e^(-x)) / (e^x + e^(-x))')
+plt.plot(x_values, y_composed, label='y = g(f(x))')
+plt.plot(x_values, y_composed_2, label='y = g(f(x)) with multiple layers')
+
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.title('The following function's output is:')
+plt.grid(True)
+plt.show()
